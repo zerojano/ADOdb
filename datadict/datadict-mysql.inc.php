@@ -23,7 +23,30 @@ class ADODB2_mysql extends ADODB_DataDict {
 
 	var $dropIndex = 'DROP INDEX %s ON %s';
 	var $renameColumn = 'ALTER TABLE %s CHANGE COLUMN %s %s %s';	// needs column-definition!
-
+	
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR',
+		ADODB_METATYPE_B=>'LONGBLOB',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'DOUBLE',
+		ADODB_METATYPE_L=>'TINYINT',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'TINYINT',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'BIGINT',
+		ADODB_METATYPE_N=>'NUMERIC',
+		ADODB_METATYPE_R=>'REAL',
+		ADODB_METATYPE_T=>'DATETIME',
+		ADODB_METATYPE_XL=>'LONGTEXT',
+		ADODB_METATYPE_X=>'TEXT',
+		ADODB_METATYPE_X2=>'LONGTEXT',
+		'TS'=>'DATETIME'
+		);
+		
+		
+	
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{
 		
@@ -76,37 +99,6 @@ class ADODB2_mysql extends ADODB_DataDict {
 		case 'MEDIUMINT': return $is_serial ? 'R' : 'I4';
 		case 'BIGINT':  return $is_serial ? 'R' : 'I8';
 		default: return ADODB_DEFAULT_METATYPE;
-		}
-	}
-
-	function ActualType($meta)
-	{
-		switch(strtoupper($meta)) {
-		case 'C': return 'VARCHAR';
-		case 'XL':return 'LONGTEXT';
-		case 'X': return 'TEXT';
-
-		case 'C2': return 'VARCHAR';
-		case 'X2': return 'LONGTEXT';
-
-		case 'B': return 'LONGBLOB';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'DATETIME';
-		case 'L': return 'TINYINT';
-
-		case 'R':
-		case 'I4':
-		case 'I': return 'INTEGER';
-		case 'I1': return 'TINYINT';
-		case 'I2': return 'SMALLINT';
-		case 'I8': return 'BIGINT';
-
-		case 'F': return 'DOUBLE';
-		case 'N': return 'NUMERIC';
-		default:
-			return $meta;
 		}
 	}
 

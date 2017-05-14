@@ -20,36 +20,27 @@ class ADODB2_ibase extends ADODB_DataDict {
 	var $databaseType = 'ibase';
 	var $seqField = false;
 
-
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'XL':
-		case 'X': return 'VARCHAR(4000)';
-
-		case 'C2': return 'VARCHAR'; // up to 32K
-		case 'X2': return 'VARCHAR(4000)';
-
-		case 'B': return 'BLOB';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'TIMESTAMP';
-
-		case 'L': return 'SMALLINT';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'INTEGER';
-
-		case 'F': return 'DOUBLE PRECISION';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR',
+		ADODB_METATYPE_B=>'BLOB',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'DOUBLE PRECISION',
+		ADODB_METATYPE_L=>'SMALLINT',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'SMALLINT',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'INTEGER',
+		ADODB_METATYPE_N=>'DECIMAL',
+		ADODB_METATYPE_R=>'DOUBLE PRECISION',
+		ADODB_METATYPE_T=>'TIMESTAMP',
+		ADODB_METATYPE_XL=>'VARCHAR(4000)',
+		ADODB_METATYPE_X=>'VARCHAR(4000)',
+		ADODB_METATYPE_X2=>'VARCHAR(4000)',
+		'TS'=>'TIMESTAMP',
+		);
+ 	
 
 	function AlterColumnSQL($tabname, $flds, $tableflds='', $tableoptions='')
 	{

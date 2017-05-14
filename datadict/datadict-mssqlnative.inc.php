@@ -50,7 +50,30 @@ class ADODB2_mssqlnative extends ADODB_DataDict {
 	var $renameColumn = "EXEC sp_rename '%s.%s','%s'";
 	var $typeX = 'TEXT';  ## Alternatively, set it to VARCHAR(4000)
 	var $typeXL = 'TEXT';
-
+	
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'NVARCHAR',
+		ADODB_METATYPE_B=>'IMAGE',
+		ADODB_METATYPE_D=>'DATETIME',
+		ADODB_METATYPE_F=>'FLOAT',
+		ADODB_METATYPE_L=>'BIT',
+		ADODB_METATYPE_I=>'INT',
+		ADODB_METATYPE_I1=>'TINYINT',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INT',
+		ADODB_METATYPE_I8=>'BIGINT',
+		ADODB_METATYPE_N=>'NUMERIC',
+		ADODB_METATYPE_R=>'REAL',
+		ADODB_METATYPE_T=>'TIME',
+		ADODB_METATYPE_X=>'TEXT',
+		ADODB_METATYPE_XL=>'TEXT',
+		ADODB_METATYPE_X2=>'NTEXT',
+		'TS'=>'DATETIME',
+		);
+		
+		
+	
 	//var $alterCol = ' ALTER COLUMN ';
 
 	function MetaType($t,$len=-1,$fieldobj=false)
@@ -100,39 +123,6 @@ class ADODB2_mssqlnative extends ADODB_DataDict {
 		return ADODB_DEFAULT_METATYPE;
 
 	}
-
-	function ActualType($meta)
-	{
-		$DATE_TYPE = 'DATETIME';
-
-		switch(strtoupper($meta)) {
-
-		case 'C': return 'VARCHAR';
-		case 'XL': return (isset($this)) ? $this->typeXL : 'TEXT';
-		case 'X': return (isset($this)) ? $this->typeX : 'TEXT'; ## could be varchar(8000), but we want compat with oracle
-		case 'C2': return 'NVARCHAR';
-		case 'X2': return 'NTEXT';
-
-		case 'B': return 'IMAGE';
-
-		case 'D': return $DATE_TYPE;
-		case 'T': return 'TIME';
-		case 'L': return 'BIT';
-
-		case 'R':
-		case 'I': return 'INT';
-		case 'I1': return 'TINYINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INT';
-		case 'I8': return 'BIGINT';
-
-		case 'F': return 'REAL';
-		case 'N': return 'NUMERIC';
-		default:
-			return $meta;
-		}
-	}
-
 
 	function AddColumnSQL($tabname, $flds)
 	{

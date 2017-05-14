@@ -183,6 +183,49 @@ class ADODB_DataDict {
 	var $blobSize = 100; 	/// any varchar/char field this size or greater is treated as a blob
 							/// in other words, we use a text area for editting.
 
+	
+	/*
+	* Basic definition of actual types that can be modified by the
+	* setActualType method, then retrieved by the actualType method
+	*/
+	protected $actualTypes = array();
+	
+	/**
+	* Set an override into the actual type or creates a new actual type
+	*
+	* @param	string	$meta	The ADOdb metatype
+	* @param	string	$actual	The database actual type
+	* @param	bool	$newType  If set, allows the creation of a new metatype
+	*
+	* @return bool success
+	*/
+	final public function setActualType($meta,$actual,$newType=false)
+	{
+		$meta = strtoupper($meta);
+		if (!isset($this->actualTypes[$meta]) && !$newType)
+			return false;
+		
+		$actual = strtoupper($actual);
+		$this->actualTypes[$meta] = $actual;
+		return true;
+	}
+	
+	/**
+	* Get an actual type.
+	*
+	* @param	string	$meta	The ADOdb metatype
+	*
+	* @return mixed
+	*/
+	final public function getActualType($meta)
+	{
+		$meta = strtoupper($meta);
+		if (!isset($this->actualTypes[$meta]))
+			return $meta;
+		
+		return $this->actualTypes[$meta];
+	}
+	
 	function GetCommentSQL($table,$col)
 	{
 		return false;

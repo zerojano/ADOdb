@@ -21,37 +21,29 @@ class ADODB2_sapdb extends ADODB_DataDict {
 	var $databaseType = 'sapdb';
 	var $seqField = false;
 	var $renameColumn = 'RENAME COLUMN %s.%s TO %s';
+	
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR UNICODE',
+		ADODB_METATYPE_B=>'LONG',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'FLOAT(38)',
+		ADODB_METATYPE_L=>'BOOLEAN',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'FIXED(3)',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'FIXED(20)',
+		ADODB_METATYPE_N=>'FIXED',
+		ADODB_METATYPE_R=>'FLOAT(16)',
+		ADODB_METATYPE_T=>'TIMESTAMP',
+		ADODB_METATYPE_XL=>'LONG',
+		ADODB_METATYPE_X=>'LONG UNICODE',
+		ADODB_METATYPE_X2=>'TEXT',
+		'TS'=>'TIMESTAMP',
+		);
 
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'XL':
-		case 'X': return 'LONG';
-
-		case 'C2': return 'VARCHAR UNICODE';
-		case 'X2': return 'LONG UNICODE';
-
-		case 'B': return 'LONG';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'TIMESTAMP';
-
-		case 'L': return 'BOOLEAN';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'FIXED(3)';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'FIXED(20)';
-
-		case 'F': return 'FLOAT(38)';
-		case 'N': return 'FIXED';
-		default:
-			return $meta;
-		}
-	}
-
+ 	
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{
 		if (is_object($t)) {

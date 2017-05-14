@@ -120,6 +120,105 @@ if (!defined('_ADODB_LAYER')) {
 	*/
 	if (!defined('ADODB_DEFAULT_METATYPE'))
 		define ('ADODB_DEFAULT_METATYPE','N');
+	
+	/******************************************************
+	* Defines a basic set of constants to match the available ADOdb metatypes
+	*/
+	
+	/*
+	* Character fields < 250
+	*/
+	define ('ADODB_METATYPE_CHAR',	'C');
+	define ('ADODB_METATYPE_C',		'C');
+	/*
+	* Multibyte Character fields
+	*/
+	define ('ADODB_METATYPE_MCHAR',	'C2');
+	define ('ADODB_METATYPE_C2',	'C2');
+	
+	/*
+	* Character fields > 250, CLOB
+	*/
+	define ('ADODB_METATYPE_TEXT',	'X');
+	define ('ADODB_METATYPE_X',		'X');
+	
+	/*
+	* Multibyte Character fields
+	*/
+	define ('ADODB_METATYPE_MTEXT',	'X2');
+	define ('ADODB_METATYPE_X2',	'X2');
+	
+	/*
+	* Character Large Object
+	*/
+	define ('ADODB_METATYPE_CLOB',	'XL');
+	define ('ADODB_METATYPE_XL',	'XL');
+	
+	/*
+	* Binary fields, BLOB
+	*/
+	define ('ADODB_METATYPE_BIN',	'B');
+	define ('ADODB_METATYPE_B',		'B');
+	
+	/*
+	* Numeric, floating point
+	*/
+	define ('ADODB_METATYPE_NUMBER','N');
+	define ('ADODB_METATYPE_N',		'N');
+	
+	/*
+	* Floating point if different from number
+	*/
+	define ('ADODB_METATYPE_FLOAT',	'F');
+	define ('ADODB_METATYPE_F',		'F');
+	
+	/*
+	* Date
+	*/
+	define ('ADODB_METATYPE_DATE',	'D');
+	define ('ADODB_METATYPE_D', 	'D');
+	
+	/*
+	* timestamp, datetime
+	*/
+	define ('ADODB_METATYPE_TIME',	    'T');
+	define ('ADODB_METATYPE_T',	    	'T');
+	
+	/*
+	* Logical, sometimes tinyint
+	*/
+	define ('ADODB_METATYPE_LOG',	'L');
+	define ('ADODB_METATYPE_L',		'L');
+
+	/*
+	* Integer types
+	*/
+	define ('ADODB_METATYPE_INT',	'I');
+	define ('ADODB_METATYPE_I',		'I');
+	define ('ADODB_METATYPE_INT1',	'I1');
+	define ('ADODB_METATYPE_I1',	'I1');
+	define ('ADODB_METATYPE_INT2',	'I2');
+	define ('ADODB_METATYPE_I2',	'I2');
+	define ('ADODB_METATYPE_INT4',	'I4');
+	define ('ADODB_METATYPE_I4',	'I4');
+	define ('ADODB_METATYPE_INT8',	'I8');
+	define ('ADODB_METATYPE_I8',	'I8');
+	
+	/*
+	* Real, sometimes autoincrement counter/integer
+	*/ 
+	define ('ADODB_METATYPE_REAL',	'R');
+	define ('ADODB_METATYPE_R',		'R');
+	
+	/*
+	* Defines the the default actual type returned
+	* when ADOdb encounters a type that it is not
+	* defined in the metaTypes.
+	*/
+	if (!defined('ADODB_DEFAULT_ACTUALTYPE'))
+		define ('ADODB_DEFAULT_ACTUALTYPE','VARCHAR');
+	
+	//**************************************************
 
 	define('ADODB_BAD_RS','<p>Bad $rs in %s. Connection or SQL invalid. Try using $connection->debug=true;</p>');
 

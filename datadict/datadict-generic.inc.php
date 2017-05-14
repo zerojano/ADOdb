@@ -20,36 +20,26 @@ class ADODB2_generic extends ADODB_DataDict {
 	var $databaseType = 'generic';
 	var $seqField = false;
 
-
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'XL':
-		case 'X': return 'VARCHAR(250)';
-
-		case 'C2': return 'VARCHAR';
-		case 'X2': return 'VARCHAR(250)';
-
-		case 'B': return 'VARCHAR';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'DATE';
-
-		case 'L': return 'DECIMAL(1)';
-		case 'I': return 'DECIMAL(10)';
-		case 'I1': return 'DECIMAL(3)';
-		case 'I2': return 'DECIMAL(5)';
-		case 'I4': return 'DECIMAL(10)';
-		case 'I8': return 'DECIMAL(20)';
-
-		case 'F': return 'DECIMAL(32,8)';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR',
+		ADODB_METATYPE_B=>'VARCHAR',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'DECIMAL(32,8)',
+		ADODB_METATYPE_L=>'DECIMAL(1)',
+		ADODB_METATYPE_I=>'DECIMAL(10)',
+		ADODB_METATYPE_I1=>'DECIMAL(3)',
+		ADODB_METATYPE_I2=>'DECIMAL(5)',
+		ADODB_METATYPE_I4=>'DECIMAL(10)',
+		ADODB_METATYPE_I8=>'DECIMAL(20)',
+		ADODB_METATYPE_N=>'DECIMAL',
+		ADODB_METATYPE_R=>'DECIMAL(32,8)',
+		ADODB_METATYPE_T=>'DATE',
+		ADODB_METATYPE_XL=>'VARCHAR(250)',
+		ADODB_METATYPE_X=>'VARCHAR(250)',
+		ADODB_METATYPE_X2=>'VARCHAR(250)',
+		'TS'=>'DATE',
+		);
 
 	function AlterColumnSQL($tabname, $flds, $tableflds='',$tableoptions='')
 	{
@@ -65,63 +55,3 @@ class ADODB2_generic extends ADODB_DataDict {
 	}
 
 }
-
-/*
-//db2
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'X': return 'VARCHAR';
-
-		case 'C2': return 'VARCHAR'; // up to 32K
-		case 'X2': return 'VARCHAR';
-
-		case 'B': return 'BLOB';
-
-		case 'D': return 'DATE';
-		case 'T': return 'TIMESTAMP';
-
-		case 'L': return 'SMALLINT';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'BIGINT';
-
-		case 'F': return 'DOUBLE';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
-
-// ifx
-function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';// 255
-		case 'X': return 'TEXT';
-
-		case 'C2': return 'NVARCHAR';
-		case 'X2': return 'TEXT';
-
-		case 'B': return 'BLOB';
-
-		case 'D': return 'DATE';
-		case 'T': return 'DATETIME';
-
-		case 'L': return 'SMALLINT';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'DECIMAL(20)';
-
-		case 'F': return 'FLOAT';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
-*/

@@ -18,37 +18,28 @@ class ADODB2_db2 extends ADODB_DataDict {
 
 	var $databaseType = 'db2';
 	var $seqField = false;
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR',
+		ADODB_METATYPE_B=>'BLOB',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'DOUBLE',
+		ADODB_METATYPE_L=>'SMALLINT',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'SMALLINT',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'BIGINT',
+		ADODB_METATYPE_N=>'DECIMAL',
+		ADODB_METATYPE_R=>'REAL',
+		ADODB_METATYPE_T=>'TIMESTAMP',
+		ADODB_METATYPE_XL=>'CLOB',
+		ADODB_METATYPE_X=>'VARCHAR(3600)',
+		ADODB_METATYPE_X2=>'VARCHAR(3600)',
+		'TS'=>'TIMESTAMP',
+		);
 
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'XL': return 'CLOB';
-		case 'X': return 'VARCHAR(3600)';
-
-		case 'C2': return 'VARCHAR'; // up to 32K
-		case 'X2': return 'VARCHAR(3600)'; // up to 32000, but default page size too small
-
-		case 'B': return 'BLOB';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'TIMESTAMP';
-
-		case 'L': return 'SMALLINT';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'BIGINT';
-
-		case 'F': return 'DOUBLE';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
-
+ 	
 	// return string must begin with space
 	function _CreateSuffix($fname,&$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
 	{
@@ -74,7 +65,7 @@ class ADODB2_db2 extends ADODB_DataDict {
 	}
 
 
-	function ChangeTableSQL($tablename, $flds, $tableoptions = false)
+	function ChangeTableSQL($tablename, $flds, $tableoptions = false, $dropOldFlds=false)
 	{
 
 		/**

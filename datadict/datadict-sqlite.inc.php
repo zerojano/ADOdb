@@ -25,38 +25,32 @@ class ADODB2_sqlite extends ADODB_DataDict {
 	var $dropIndex = 'DROP INDEX IF EXISTS %s';
 	var $renameTable = 'ALTER TABLE %s RENAME TO %s';
 
+	/*
+	* This is actually a copy of the definitions for mysql. sqlite
+	* actually has a very limited datatype set
+	*/
+	protected $actualTypes = array(
+		ADODB_METATYPE_CHAR=>'VARCHAR',
+		ADODB_METATYPE_MCHAR=>'VARCHAR',
+		ADODB_METATYPE_BIN=>'LONGBLOB',
+		ADODB_METATYPE_DATE=>'DATE',
+		ADODB_METATYPE_FLOAT=>'DOUBLE',
+		ADODB_METATYPE_LOG=>'TINYINT',
+		ADODB_METATYPE_INT=>'INTEGER',
+		ADODB_METATYPE_INT1=>'TINYINT',
+		ADODB_METATYPE_INT2=>'SMALLINT',
+		ADODB_METATYPE_INT4=>'INTEGER',
+		ADODB_METATYPE_INT8=>'BIGINT',
+		ADODB_METATYPE_NUM=>'NUMERIC',
+		ADODB_METATYPE_REAL=>'INTEGER',
+		ADODB_METATYPE_TIME=>'DATETIME',
+		ADODB_METATYPE_CLOB=>'LONGTEXT',
+		ADODB_METATYPE_TEXT=>'TEXT',
+		ADODB_METATYPE_MTEXT=>'LONGTEXT',
+		'TS'=>'DATETIME'
+		);
 
-
-	function ActualType($meta)
-	{
-		switch(strtoupper($meta)) {
-		case 'C': return 'VARCHAR'; //  TEXT , TEXT affinity
-		case 'XL':return 'LONGTEXT'; //  TEXT , TEXT affinity
-		case 'X': return 'TEXT'; //  TEXT , TEXT affinity
-
-		case 'C2': return 'VARCHAR'; //  TEXT , TEXT affinity
-		case 'X2': return 'LONGTEXT'; //  TEXT , TEXT affinity
-
-		case 'B': return 'LONGBLOB'; //  TEXT , NONE affinity , BLOB
-
-		case 'D': return 'DATE'; // NUMERIC , NUMERIC affinity
-		case 'T': return 'DATETIME'; // NUMERIC , NUMERIC affinity
-		case 'L': return 'TINYINT'; // NUMERIC , INTEGER affinity
-
-		case 'R':
-		case 'I4':
-		case 'I': return 'INTEGER'; // NUMERIC , INTEGER affinity
-		case 'I1': return 'TINYINT'; // NUMERIC , INTEGER affinity
-		case 'I2': return 'SMALLINT'; // NUMERIC , INTEGER affinity
-		case 'I8': return 'BIGINT'; // NUMERIC , INTEGER affinity
-
-		case 'F': return 'DOUBLE'; // NUMERIC , REAL affinity
-		case 'N': return 'NUMERIC'; // NUMERIC , NUMERIC affinity
-		default:
-			return $meta;
-		}
-	}
-
+	
 	// return string must begin with space
 	function _CreateSuffix($fname,&$ftype,$fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
 	{

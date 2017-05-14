@@ -24,40 +24,35 @@ class ADODB2_firebird extends ADODB_DataDict {
 	var $renameColumn = 'ALTER TABLE %s ALTER %s TO %s';
 	var $alterCol = ' ALTER';
 	var $dropCol = ' DROP';
+	
+	/*
+	* Firebird has 2 custom data types V and C1
+	* V is a varbinary (Blob) and C1 is a bit (logical), 
+	*/
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR(32765)',
+		ADODB_METATYPE_B=>'BLOB',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'DOUBLE PRECISION',
+		ADODB_METATYPE_L=>'SMALLINT',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'SMALLINT',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'BIGINT',
+		ADODB_METATYPE_N=>'DECIMAL',
+		ADODB_METATYPE_R=>'DOUBLE',
+		ADODB_METATYPE_T=>'TIMESTAMP',
+		ADODB_METATYPE_XL=>'BLOB SUB_TYPE TEXT',
+		ADODB_METATYPE_X=>'BLOB SUB_TYPE TEXT',
+		ADODB_METATYPE_X2=>'VARCHAR(4096)',
+		'TS'=>'TIMESTAMP',
+		'V'=>'CHAR',
+		'C1'=>'CHAR(1)',
+		);
 
-	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'XL':
-		case 'X': return 'BLOB SUB_TYPE TEXT';
-
-		case 'C2': return 'VARCHAR(32765)'; // up to 32K
-		case 'X2': return 'VARCHAR(4096)';
-
-		case 'V': return 'CHAR';
-		case 'C1': return 'CHAR(1)';
-
-		case 'B': return 'BLOB';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'TIMESTAMP';
-
-		case 'L': return 'SMALLINT';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'BIGINT';
-
-		case 'F': return 'DOUBLE PRECISION';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
-
+	
 	function NameQuote($name = NULL,$allowBrackets=false)
 	{
 		if (!is_string($name)) {

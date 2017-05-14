@@ -25,6 +25,28 @@ class ADODB2_postgres extends ADODB_DataDict {
 	var $renameTable = 'ALTER TABLE %s RENAME TO %s'; // at least since 7.1
 	var $dropTable = 'DROP TABLE %s CASCADE';
 
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'VARCHAR',
+		ADODB_METATYPE_B=>'BYTEA',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'FLOAT8',
+		ADODB_METATYPE_L=>'BOOLEAN',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'SMALLINT',
+		ADODB_METATYPE_I2=>'INT2',
+		ADODB_METATYPE_I4=>'INT4',
+		ADODB_METATYPE_I8=>'INT8',
+		ADODB_METATYPE_N=>'NUMERIC',
+		ADODB_METATYPE_R=>'REAL',
+		ADODB_METATYPE_T=>'TIMESTAMP',
+		ADODB_METATYPE_XL=>'TEXT',
+		ADODB_METATYPE_X=>'TEXT',
+		ADODB_METATYPE_X2=>'TEXT',
+		'TS'=>'TIMESTAMP',
+		);
+	
+	
 	function MetaType($t,$len=-1,$fieldobj=false)
 	{
 		if (is_object($t)) {
@@ -89,36 +111,7 @@ class ADODB2_postgres extends ADODB_DataDict {
 		}
 	}
 
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'XL':
-		case 'X': return 'TEXT';
-
-		case 'C2': return 'VARCHAR';
-		case 'X2': return 'TEXT';
-
-		case 'B': return 'BYTEA';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'TIMESTAMP';
-
-		case 'L': return 'BOOLEAN';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'INT2';
-		case 'I4': return 'INT4';
-		case 'I8': return 'INT8';
-
-		case 'F': return 'FLOAT8';
-		case 'N': return 'NUMERIC';
-		default:
-			return $meta;
-		}
-	}
-
+ 	
 	/**
 	 * Adding a new Column
 	 *

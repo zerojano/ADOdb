@@ -20,36 +20,27 @@ class ADODB2_informix extends ADODB_DataDict {
 	var $databaseType = 'informix';
 	var $seqField = false;
 
-
-	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';// 255
-		case 'XL':
-		case 'X': return 'TEXT';
-
-		case 'C2': return 'NVARCHAR';
-		case 'X2': return 'TEXT';
-
-		case 'B': return 'BLOB';
-
-		case 'D': return 'DATE';
-		case 'TS':
-		case 'T': return 'DATETIME YEAR TO SECOND';
-
-		case 'L': return 'SMALLINT';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'SMALLINT';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'DECIMAL(20)';
-
-		case 'F': return 'FLOAT';
-		case 'N': return 'DECIMAL';
-		default:
-			return $meta;
-		}
-	}
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'NVARCHAR',
+		ADODB_METATYPE_B=>'BLOB',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'FLOAT',
+		ADODB_METATYPE_L=>'SMALLINT',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'SMALLINT',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'DECIMAL(20)',
+		ADODB_METATYPE_N=>'DECIMAL',
+		ADODB_METATYPE_R=>'SERIAL',
+		ADODB_METATYPE_T=>'DATETIME YEAR TO SECOND',
+		ADODB_METATYPE_XL=>'TEXT',
+		ADODB_METATYPE_X=>'TEXT',
+		ADODB_METATYPE_X2=>'TEXT',
+		'TS'=>'DATETIME YEAR TO SECOND',
+		);
+	
 
 	function AlterColumnSQL($tabname, $flds, $tableflds='', $tableoptions='')
 	{

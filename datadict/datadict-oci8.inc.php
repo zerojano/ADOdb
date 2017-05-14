@@ -26,6 +26,28 @@ class ADODB2_oci8 extends ADODB_DataDict {
 	var $typeX = 'VARCHAR(4000)';
 	var $typeXL = 'CLOB';
 
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'VARCHAR',
+		ADODB_METATYPE_C2=>'NVARCHAR2',
+		ADODB_METATYPE_B=>'BLOB',
+		ADODB_METATYPE_D=>'DATE',
+		ADODB_METATYPE_F=>'NUMBER',
+		ADODB_METATYPE_L=>'NUMBER(1)',
+		ADODB_METATYPE_I=>'NUMBER(10)',
+		ADODB_METATYPE_I1=>'NUMBER(3)',
+		ADODB_METATYPE_I2=>'NUMBER(5)',
+		ADODB_METATYPE_I4=>'NUMBER(10)',
+		ADODB_METATYPE_I8=>'NUMBER(20)',
+		ADODB_METATYPE_N=>'DECIMAL',
+		ADODB_METATYPE_R=>'NUMBER(20)',
+		ADODB_METATYPE_T=>'DATE',
+		ADODB_METATYPE_XL=>'CLOB',
+		ADODB_METATYPE_X=>'VARCHAR(4000)',
+		ADODB_METATYPE_X2=>'NVARCHAR2(4000)',
+		'TS'=>'TIMESTAMP',
+		);
+	
+	
 	function MetaType($t, $len=-1, $fieldobj=false)
 	{
 		if (is_object($t)) {
@@ -73,38 +95,7 @@ class ADODB2_oci8 extends ADODB_DataDict {
 		}
 	}
 
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'VARCHAR';
-		case 'X': return $this->typeX;
-		case 'XL': return $this->typeXL;
-
-		case 'C2': return 'NVARCHAR2';
-		case 'X2': return 'NVARCHAR2(4000)';
-
-		case 'B': return 'BLOB';
-
-		case 'TS':
-				return 'TIMESTAMP';
-
-		case 'D':
-		case 'T': return 'DATE';
-		case 'L': return 'NUMBER(1)';
-		case 'I1': return 'NUMBER(3)';
-		case 'I2': return 'NUMBER(5)';
-		case 'I':
-		case 'I4': return 'NUMBER(10)';
-
-		case 'I8': return 'NUMBER(20)';
-		case 'F': return 'NUMBER';
-		case 'N': return 'NUMBER';
-		case 'R': return 'NUMBER(20)';
-		default:
-			return $meta;
-		}
-	}
-
+ 	
 	function CreateDatabase($dbname, $options=false)
 	{
 		$options = $this->_Options($options);

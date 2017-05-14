@@ -18,38 +18,29 @@ if (!defined('ADODB_DIR')) die();
 class ADODB2_access extends ADODB_DataDict {
 
 	var $databaseType = 'access';
+	
 	var $seqField = false;
 
-
- 	function ActualType($meta)
-	{
-		switch($meta) {
-		case 'C': return 'TEXT';
-		case 'XL':
-		case 'X': return 'MEMO';
-
-		case 'C2': return 'TEXT'; // up to 32K
-		case 'X2': return 'MEMO';
-
-		case 'B': return 'BINARY';
-
-		case 'TS':
-		case 'D': return 'DATETIME';
-		case 'T': return 'DATETIME';
-
-		case 'L': return 'BYTE';
-		case 'I': return 'INTEGER';
-		case 'I1': return 'BYTE';
-		case 'I2': return 'SMALLINT';
-		case 'I4': return 'INTEGER';
-		case 'I8': return 'INTEGER';
-
-		case 'F': return 'DOUBLE';
-		case 'N': return 'NUMERIC';
-		default:
-			return $meta;
-		}
-	}
+	protected $actualTypes = array(
+		ADODB_METATYPE_C=>'TEXT',
+		ADODB_METATYPE_C2=>'TEXT',
+		ADODB_METATYPE_B=>'BINARY',
+		ADODB_METATYPE_D=>'DATETIME',
+		ADODB_METATYPE_F=>'DOUBLE',
+		ADODB_METATYPE_L=>'BYTE',
+		ADODB_METATYPE_I=>'INTEGER',
+		ADODB_METATYPE_I1=>'BYTE',
+		ADODB_METATYPE_I2=>'SMALLINT',
+		ADODB_METATYPE_I4=>'INTEGER',
+		ADODB_METATYPE_I8=>'INTEGER',
+		ADODB_METATYPE_N=>'NUMERIC',
+		ADODB_METATYPE_R=>'INTEGER',
+		ADODB_METATYPE_T=>'DATETIME',
+		ADODB_METATYPE_XL=>'MEMO',
+		ADODB_METATYPE_X=>'MEMO',
+		ADODB_METATYPE_X2=>'MEMO',
+		'TS'=>'DATETIME'
+		);
 
 	// return string must begin with space
 	function _CreateSuffix($fname, &$ftype, $fnotnull,$fdefault,$fautoinc,$fconstraint,$funsigned)
