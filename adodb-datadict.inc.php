@@ -191,18 +191,36 @@ class ADODB_DataDict {
 	protected $actualTypes = array();
 	
 	/**
-	* Set an override into the actual type or creates a new actual type
+	* Set an override into an existing actual type
 	*
 	* @param	string	$meta	The ADOdb metatype
 	* @param	string	$actual	The database actual type
-	* @param	bool	$newType  If set, allows the creation of a new metatype
 	*
-	* @return bool success
+	* @return bool success if the actual exists
 	*/
-	final public function setActualType($meta,$actual,$newType=false)
+	final public function setActualType($meta,$actual)
 	{
 		$meta = strtoupper($meta);
-		if (!isset($this->actualTypes[$meta]) && !$newType)
+		if (!isset($this->actualTypes[$meta]))
+			return false;
+		
+		$actual = strtoupper($actual);
+		$this->actualTypes[$meta] = $actual;
+		return true;
+	}
+	
+	/**
+	* creates a new actual type not already defined in the system
+	*
+	* @param	string	$meta	The ADOdb metatype
+	* @param	string	$actual	The database actual type
+	*
+	* @return bool success if the actual type does not exist
+	*/
+	final public function addActualType($meta,$actual)
+	{
+		$meta = strtoupper($meta);
+		if (isset($this->actualTypes[$meta]))
 			return false;
 		
 		$actual = strtoupper($actual);
